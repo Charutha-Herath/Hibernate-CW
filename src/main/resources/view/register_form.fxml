@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="MainPane" prefHeight="400.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.RegisterFormController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8f2fc" height="377.0" layoutX="9.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" width="342.0" />
+      <Label layoutX="110.0" layoutY="37.0" prefHeight="40.0" prefWidth="153.0" text="Registration ">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUsername" layoutX="53.0" layoutY="108.0" prefHeight="26.0" prefWidth="256.0" promptText="                            Username" style="-fx-background-radius: 15;" />
+      <TextField fx:id="txtEmail" layoutX="53.0" layoutY="160.0" prefHeight="26.0" prefWidth="256.0" promptText="                              E-mail" style="-fx-background-radius: 15;" />
+      <TextField fx:id="txtPassword" layoutX="53.0" layoutY="213.0" prefHeight="26.0" prefWidth="256.0" promptText="                            Password" style="-fx-background-radius: 15;" />
+      <JFXButton buttonType="RAISED" layoutX="155.0" layoutY="314.0" onAction="#btnRegister" style="-fx-background-color: #5693ef; -fx-background-radius: 5;" text="Register" />
+      <TextField fx:id="txtConfirmPassword" layoutX="53.0" layoutY="265.0" prefHeight="26.0" prefWidth="256.0" promptText="                       Confirm Password" style="-fx-background-radius: 15;" />
+   </children>
+</AnchorPane>

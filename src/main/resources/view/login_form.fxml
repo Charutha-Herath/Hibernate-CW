@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="MainPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 15;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.LoginFormController">
+   <children>
+      <Label layoutX="261.0" layoutY="23.0" prefHeight="52.0" prefWidth="77.0" text="Login" textFill="#030303">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUsername" layoutX="173.0" layoutY="108.0" prefHeight="42.0" prefWidth="256.0" promptText="Username" style="-fx-background-radius: 15;" />
+      <TextField fx:id="txtPassword" layoutX="173.0" layoutY="173.0" prefHeight="42.0" prefWidth="256.0" promptText="Password" style="-fx-background-radius: 15;" />
+      <JFXButton buttonType="RAISED" layoutX="275.0" layoutY="255.0" onAction="#btnSignIn" style="-fx-background-color: #5693ef; -fx-background-radius: 5;" text="Sign In" />
+      <JFXButton buttonType="RAISED" layoutX="262.0" layoutY="302.0" onAction="#btnRegister" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: #5693ef; -fx-background-radius: 5;" text="Register" />
+   </children>
+</AnchorPane>
