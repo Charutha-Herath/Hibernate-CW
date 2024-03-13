@@ -10,4 +10,10 @@ public interface UserDao extends SuperDao {
     HashMap<String, String> checker(User user);
 
     void save(User user);
+
+    boolean update(String username, String password, User user);
+
+    String getNextId();
+
+    String getUserId(String uname, String password);
 }

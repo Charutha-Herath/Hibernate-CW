@@ -21,6 +21,12 @@ public class LoginFormController {
     public TextField txtUsername;
     public TextField txtPassword;
 
+    private Stage stage;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     UserBo userBo = (UserBo) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.USER);
 
     public void btnSignIn(ActionEvent actionEvent) throws IOException {
@@ -30,13 +36,47 @@ public class LoginFormController {
         System.out.println(uname);
         System.out.println(pwd);
 
-        if (uname.isEmpty()| pwd.isEmpty()  ) {
+        if (uname.isEmpty()|| pwd.isEmpty()  ) {
             new Alert(Alert.AlertType.ERROR,"please fill all fields").show();
         }else {
 
+
             if (userBo.checkCredential(new UserDto(uname,pwd)) ){
-                MainPane.getChildren().clear();
-                MainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml")));
+                /*MainPane.getChildren().clear();
+                MainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml")));*/
+
+                /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard_form.fxml"));
+                Parent dashboardParent = loader.load();
+                DashboardFormController dashboardFormController = loader.getController();
+                dashboardFormController.setUsername(uname);
+                dashboardFormController.setPassword(pwd);*/
+                /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard_form.fxml"));
+                Parent dashboardParent = loader.load();
+                DashboardController dashboardController = loader.getController();
+                dashboardController.setUsername(uname);*/
+
+
+
+
+
+                /*MainPane.getChildren().clear();
+                MainPane.getChildren().add(dashboardParent);*/
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard_form.fxml"));
+                AnchorPane anchorPane = loader.load();
+                DashboardFormController dashboardFormController = loader.getController();
+                dashboardFormController.setUsername(uname);
+                dashboardFormController.setPassword(pwd);
+
+                Scene scene = new Scene(anchorPane);
+
+                Stage stage = (Stage) MainPane.getScene().getWindow();
+                stage.setScene(scene);
+                stage.setTitle("AdminDash");
+                stage.centerOnScreen();
+
+                stage.show();
+
             }else{
                 new Alert(Alert.AlertType.WARNING,"Incorrect Username Or Password").show();
             }

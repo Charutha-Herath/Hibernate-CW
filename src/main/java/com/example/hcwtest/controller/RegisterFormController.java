@@ -37,7 +37,8 @@ public class RegisterFormController {
                 txtPassword.clear();
                 txtConfirmPassword.clear();
             }else {
-                userBo.saveUser(new UserDto(uname,mail,pwd));
+                String id =userBo.generateId();
+                userBo.saveUser(new UserDto(id,uname,mail,pwd));
                 new Alert(Alert.AlertType.CONFIRMATION,"Registration Successfully!").show();
 
                 txtUsername.clear();

@@ -7,4 +7,11 @@ public interface UserBo extends SuperBo {
     boolean checkCredential(UserDto userDto);
 
     void saveUser(UserDto userDto);
+
+    boolean updateNewCredential(String username, String password, UserDto userDto);
+
+    String generateId();
+
+    String getUserId(String uname,String password);
+
 }
