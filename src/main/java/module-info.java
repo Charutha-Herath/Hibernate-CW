@@ -6,8 +6,7 @@ module com.example.hcwtest{
     requires java.naming;
 
     requires org.hibernate.orm.core;
-
-
+    requires com.jfoenix;
 
 
     opens com.example.hcwtest to javafx.fxml,org.hibernate.orm.core;
@@ -17,4 +16,5 @@ module com.example.hcwtest{
 
     exports com.example.hcwtest.entity;
     opens com.example.hcwtest.entity to org.hibernate.orm.core;
+    opens com.example.hcwtest.dto.Tm to javafx.base;
 }

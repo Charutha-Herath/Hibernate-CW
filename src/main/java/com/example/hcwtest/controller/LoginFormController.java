@@ -30,6 +30,9 @@ public class LoginFormController {
     UserBo userBo = (UserBo) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.USER);
 
     public void btnSignIn(ActionEvent actionEvent) throws IOException {
+
+        loadAdminDash();
+
         String uname = txtUsername.getText();
         String pwd = txtPassword.getText();
 
@@ -62,20 +65,44 @@ public class LoginFormController {
                 /*MainPane.getChildren().clear();
                 MainPane.getChildren().add(dashboardParent);*/
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard_form.fxml"));
-                AnchorPane anchorPane = loader.load();
-                DashboardFormController dashboardFormController = loader.getController();
-                dashboardFormController.setUsername(uname);
-                dashboardFormController.setPassword(pwd);
+                String id = userBo.getUserId(uname,pwd);
 
-                Scene scene = new Scene(anchorPane);
+                /*if (id.startsWith("U")){
 
-                Stage stage = (Stage) MainPane.getScene().getWindow();
-                stage.setScene(scene);
-                stage.setTitle("AdminDash");
-                stage.centerOnScreen();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard_form.fxml"));
+                    AnchorPane anchorPane = loader.load();
+                    DashboardFormController dashboardFormController = loader.getController();
+                    dashboardFormController.setUsername(uname);
+                    dashboardFormController.setPassword(pwd);
 
-                stage.show();
+                    Scene scene = new Scene(anchorPane);
+
+                    Stage stage = (Stage) MainPane.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.setTitle("UserDash");
+                    stage.centerOnScreen();
+
+                    stage.show();
+
+
+                }else{
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminDash_form.fxml"));
+                    AnchorPane anchorPane = loader.load();
+                    AdminDashFormController adminDashFormController = loader.getController();
+                    adminDashFormController.setUsername(uname);
+                    adminDashFormController.setPassword(pwd);
+                    adminDashFormController.setId(id);
+
+                    Scene scene = new Scene(anchorPane);
+
+                    Stage stage = (Stage) MainPane.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.setTitle("AdminDash");
+                    stage.centerOnScreen();
+
+                    stage.show();
+                }*/
+
 
             }else{
                 new Alert(Alert.AlertType.WARNING,"Incorrect Username Or Password").show();
@@ -99,5 +126,30 @@ public class LoginFormController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    public void loadAdminDash() throws IOException {
+
+        String uname = txtUsername.getText();
+        String pwd = txtPassword.getText();
+
+        String id = userBo.getUserId(uname,pwd);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminDash_form.fxml"));
+        AnchorPane anchorPane = loader.load();
+        AdminDashFormController adminDashFormController = loader.getController();
+        adminDashFormController.setUsername(uname);
+        adminDashFormController.setPassword(pwd);
+        adminDashFormController.setId(id);
+
+        Scene scene = new Scene(anchorPane);
+
+        Stage stage = (Stage) MainPane.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("AdminDash");
+        stage.centerOnScreen();
+
+        stage.show();
+
     }
 }

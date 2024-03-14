@@ -1,5 +1,6 @@
 package com.example.hcwtest.config;
 
+import com.example.hcwtest.entity.Book;
 import com.example.hcwtest.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,7 +18,9 @@ public class FactoryConfiguration {
         StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
         standardServiceRegistryBuilder.loadProperties("hibernate.properties");
         MetadataSources metadataSources = new MetadataSources(standardServiceRegistryBuilder.build());
-        metadataSources.addAnnotatedClass(User.class);
+        metadataSources
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Book.class);
 
         Metadata metadata = metadataSources.getMetadataBuilder().build();
 

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 
 public class DashboardFormController {
 
+    public AnchorPane root;
     public Label lblPasswordLoader;
     public Label lblUsernameLoader;
     private String username;
@@ -59,6 +61,25 @@ public class DashboardFormController {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("AdminDash");
+        stage.centerOnScreen();
+
+        stage.show();
+    }
+
+    public void btnRefreshOnAction(MouseEvent mouseEvent) {
+
+    }
+
+    public void btnLogoutOnAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login_form.fxml"));
+        AnchorPane anchorPane = loader.load();
+
+
+        Scene scene = new Scene(anchorPane);
+
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Login");
         stage.centerOnScreen();
 
         stage.show();

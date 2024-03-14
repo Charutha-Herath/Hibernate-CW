@@ -66,10 +66,17 @@ public class ChangeCredentialFormController {
                 if (userBo.updateNewCredential(id,password, new UserDto(txtUsername.getText(),txtNewPassword.getText()))){
                     System.out.println("update");
 
+
+
+                    AdminDashFormController adminDashFormController = new AdminDashFormController();
+                    System.out.println(txtUsername.getText());
+                    System.out.println(txtNewPassword.getText());
+                    /*adminDashFormController.setUsername(txtUsername.getText());
+                    adminDashFormController.setPassword(txtNewPassword.getText());*/
+
                     txtUsername.clear();
                     txtNewPassword.clear();
                     txtConfirmPassword.clear();
-
                 }
             }else{
                 new Alert(Alert.AlertType.WARNING,"Password does not match").show();
