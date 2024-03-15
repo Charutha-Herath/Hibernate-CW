@@ -6,6 +6,7 @@ import com.example.hcwtest.dto.BookDto;
 import com.example.hcwtest.entity.Book;
 import com.example.hcwtest.entity.User;
 import jakarta.persistence.TypedQuery;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -112,6 +113,7 @@ public class BookDaoImpl implements BookDao {
             return false;
         } finally {
             session.close();
+
         }
     }
 
@@ -124,6 +126,33 @@ public class BookDaoImpl implements BookDao {
         transaction.commit();
         session.close();
         return true;
+    }
+
+    @Override
+    public Book search(String bookId) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        Book load = session.load(Book.class, bookId);
+        transaction.commit();
+        session.close();
+        return load;
+    }
+
+    @Override
+    public void updateStatusNo(Book search) {
+        Transaction transaction = null;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            transaction = session.beginTransaction();
+            Book load = session.load(Book.class, search.getBookId());
+            load.setStatus("NO");
+            session.update(load);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 
     private static String splitUserId(String userId) {

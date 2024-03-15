@@ -1,5 +1,7 @@
 package com.example.hcwtest.dto.Tm;
 
+import com.jfoenix.controls.JFXButton;
+
 public class BookTm {
     private String bookId;
 
@@ -10,6 +12,7 @@ public class BookTm {
 
     private String branch;
 
+    private JFXButton button;
 
     public BookTm() {
 
@@ -30,6 +33,16 @@ public class BookTm {
         this.genre = genre;
         this.status = status;
         this.branch = branch;
+    }
+
+    public BookTm(String bookId, String title, String author, String genre, String status, String branch, JFXButton button) {
+        this.bookId = bookId;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.status = status;
+        this.branch = branch;
+        this.button = button;
     }
 
     public String getBookId() {
@@ -80,6 +93,14 @@ public class BookTm {
         this.branch = branch;
     }
 
+    public JFXButton getButton() {
+        return button;
+    }
+
+    public void setButton(JFXButton button) {
+        this.button = button;
+    }
+
     @Override
     public String toString() {
         return "BookTm{" +
@@ -89,6 +110,7 @@ public class BookTm {
                 ", genre='" + genre + '\'' +
                 ", status='" + status + '\'' +
                 ", branch='" + branch + '\'' +
+                ", button=" + button +
                 '}';
     }
 }

@@ -4,6 +4,7 @@ package com.example.hcwtest.dao;
 import com.example.hcwtest.bo.custom.impl.BranchBoImpl;
 import com.example.hcwtest.dao.custom.Impl.BookDaoImpl;
 import com.example.hcwtest.dao.custom.Impl.BranchDaoImpl;
+import com.example.hcwtest.dao.custom.Impl.TransactionDaoImpl;
 import com.example.hcwtest.dao.custom.Impl.UserDaoImpl;
 
 public class DAOFactory {
@@ -14,7 +15,7 @@ public class DAOFactory {
         return (daoFactory==null)?daoFactory=new DAOFactory():daoFactory;
     }
     public enum DAOTypes{
-        USER,BOOK,BRANCH
+        USER,BOOK,BRANCH,TRANSACTION
     }
     public SuperDao getDAO(DAOTypes daoTypes){
         switch (daoTypes){
@@ -24,6 +25,8 @@ public class DAOFactory {
                 return new BookDaoImpl();
             case BRANCH:
                 return new BranchDaoImpl();
+            case TRANSACTION:
+                return new TransactionDaoImpl();
             default:
                 return null;
         }

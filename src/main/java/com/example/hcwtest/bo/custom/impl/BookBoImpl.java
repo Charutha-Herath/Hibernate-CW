@@ -4,6 +4,7 @@ import com.example.hcwtest.bo.BOFactory;
 import com.example.hcwtest.bo.custom.BookBo;
 import com.example.hcwtest.dao.DAOFactory;
 import com.example.hcwtest.dao.custom.BookDao;
+import com.example.hcwtest.dao.custom.TransactionDao;
 import com.example.hcwtest.dto.BookDto;
 import com.example.hcwtest.entity.Book;
 
@@ -14,10 +15,11 @@ public class BookBoImpl implements BookBo {
 
     BookDao bookDao = (BookDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.BOOK);
 
+    TransactionDao transactionDao = (TransactionDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.TRANSACTION);
 
     @Override
     public void addBook(BookDto dto) {
-        bookDao.save(new Book(dto.getBookId(), dto.getTitle(), dto.getAuthor(), dto.getGenre(), dto.getStatus()));
+        bookDao.save(new Book(dto.getBookId(), dto.getTitle(), dto.getAuthor(), dto.getGenre(), dto.getStatus(),dto.getBranch()));
     }
 
     @Override
@@ -27,7 +29,7 @@ public class BookBoImpl implements BookBo {
         ArrayList<BookDto> dtoList = new ArrayList<>();
 
         for (Book book: books) {
-            dtoList.add(new BookDto(book.getBookId(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getStatus()));
+            dtoList.add(new BookDto(book.getBookId(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getStatus(),book.getBranch()));
         }
 
         return dtoList;
@@ -47,4 +49,6 @@ public class BookBoImpl implements BookBo {
     public boolean deleteBook(String bookId) {
         return bookDao.delete(bookId);
     }
+
+
 }

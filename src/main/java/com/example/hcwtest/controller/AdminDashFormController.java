@@ -4,7 +4,9 @@ import com.example.hcwtest.bo.BOFactory;
 import com.example.hcwtest.bo.custom.BookBo;
 import com.example.hcwtest.bo.custom.BranchBo;
 import com.example.hcwtest.dto.BookDto;
+import com.example.hcwtest.dto.BranchDto;
 import com.example.hcwtest.dto.Tm.BookTm;
+import com.example.hcwtest.dto.Tm.BranchTm;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,12 +50,21 @@ public class AdminDashFormController {
     public TableColumn colBranchManager;
     public TableColumn colBranchBookTotal;
     public Label lblBranchId;
-    public TextField txtName;
-    public TextField txtManager;
-    public TextField txtBookTotal;
+
     public JFXButton idBtnAddBranch;
     public JFXButton idBtnUpdateBranch;
     public JFXButton idBtnRemoveBranch;
+    public TextField txtBranchName;
+    public TextField txtBranchManager;
+    public TextField txtBranchBookTotal;
+    public ComboBox comboBranches;
+    public TableView tblTransaction;
+    public TableColumn colTransactionTrancID;
+    public TableColumn colTransactionBookName;
+    public TableColumn colTransactionUserName;
+    public TableColumn colTransactionBorrowDate;
+    public TableColumn colTransactionReturnDate;
+    public TableColumn colTransactionStatus;
 
     private String id;
     private String username;
@@ -123,8 +134,8 @@ public class AdminDashFormController {
         tableListener();
         btnDisabler();
 
-
-        //branchInitialize();
+        //--------------------------------------------------------------------------------------------------------------------
+        branchInitialize();
     }
 
 
@@ -213,12 +224,13 @@ public class AdminDashFormController {
         String author = txtAuthor.getText();
         String genre = txtGenre.getText();
         String comStatus = (String) comboStatus.getValue();
+        String comBranch = (String) comboBranches.getValue();
 
 
-        if(bookId.isEmpty() || title.isEmpty() || author.isEmpty() || genre.isEmpty() || comStatus==null){
+        if(bookId.isEmpty() || title.isEmpty() || author.isEmpty() || genre.isEmpty() || comStatus==null || comBranch==null){
             new Alert(Alert.AlertType.WARNING,"Please fill all fields").show();
         }else {
-            bookBo.addBook(new BookDto(bookId,title,author,genre,comStatus));
+            bookBo.addBook(new BookDto(bookId,title,author,genre,comStatus,comBranch));
 
             generateNextID();
 
@@ -226,6 +238,7 @@ public class AdminDashFormController {
             txtAuthor.clear();
             txtGenre.clear();
             comboLoader();
+            comboBranchLoader();
 
             setCellValueFactory();
             loadAllBooks();
@@ -362,12 +375,22 @@ public class AdminDashFormController {
 
 
     private void branchInitialize() {
+
         generateNextBranchID();
+        comboBranchLoader();
+
+        setCellValueFactoryBranches();
+        loadAllBranches();
     }
 
 
     public void btnBranchAddOnAction(ActionEvent actionEvent) {
+        String branchId = lblBranchId.getText();
+        String branchName = txtBranchName.getText();
+        String branchManager = txtBranchManager.getText();
+        String branchBookTotal = txtBranchBookTotal.getText();
 
+        branchBo.saveBranch(new BranchDto(branchId,branchName,branchManager,branchBookTotal));
     }
 
     public void refreshOnMouseBranchClicked(MouseEvent mouseEvent) {
@@ -386,4 +409,59 @@ public class AdminDashFormController {
         String id = branchBo.generateId();
         lblBranchId.setText(id);
     }
+
+    public void comboBranchLoader(){
+
+        List<String> list = branchBo.getBranchName();
+        comboBranches.getItems().addAll(FXCollections.observableArrayList(list));
+        /*ObservableList<String> list = FXCollections.observableArrayList("Yes","No");
+        comboStatus.setItems(list);*/
+    }
+
+    private void setCellValueFactoryBranches(){
+        colBranchId.setCellValueFactory(new PropertyValueFactory<>("branchId"));
+        colBranchName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colBranchManager.setCellValueFactory(new PropertyValueFactory<>("manager"));
+        colBranchBookTotal.setCellValueFactory(new PropertyValueFactory<>("book_total"));
+
+
+    }
+
+    private void loadAllBranches(){
+
+        ObservableList<BranchTm> obList = FXCollections.observableArrayList();
+
+        List<BranchDto> dtoList = branchBo.getAllBranches();
+
+        for (BranchDto dto :dtoList) {
+            obList.add(
+                    new BranchTm(
+                            dto.getBranchId(),
+                            dto.getName(),
+                            dto.getManager(),
+                            dto.getBook_total()
+
+                    )
+
+            );
+        }
+        tblBranch.setItems(obList);
+
+    }
+
+
+    public void filterOverDueOnMouseClicked(MouseEvent mouseEvent) {
+
+    }
+
+
+
+
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------
+
+
+
 }

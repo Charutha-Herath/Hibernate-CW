@@ -2,9 +2,14 @@ package com.example.hcwtest.dao.custom.Impl;
 
 import com.example.hcwtest.config.FactoryConfiguration;
 import com.example.hcwtest.dao.custom.BranchDao;
+import com.example.hcwtest.entity.Book;
+import com.example.hcwtest.entity.Branch;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BranchDaoImpl implements BranchDao {
 
@@ -27,6 +32,40 @@ public class BranchDaoImpl implements BranchDao {
 
         return newId;
     }
+
+    @Override
+    public void save(Branch entity) {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(entity);
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
+    public List<String> getBranchNames() {
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Query<String> query = session.createQuery("SELECT b.name FROM Branch b", String.class);
+            return query.list();
+        } catch (Exception e) {
+            // Handle exceptions appropriately
+            e.printStackTrace();
+            return null; // Or throw your custom exception
+        }
+    }
+
+    @Override
+    public ArrayList<Branch> getAll() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        ArrayList<Branch> list = (ArrayList<Branch>)session.createQuery("FROM Branch ").list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
     private static String splitId(String userId) {
         if (userId != null){
             String[] splint = userId.split("BR0");

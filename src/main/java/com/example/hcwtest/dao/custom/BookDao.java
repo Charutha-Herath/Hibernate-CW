@@ -18,4 +18,8 @@ public interface BookDao extends SuperDao {
     boolean update(Book book);
 
     boolean delete(String bookId);
+
+    Book search(String bookId);
+
+    void updateStatusNo(Book search);
 }

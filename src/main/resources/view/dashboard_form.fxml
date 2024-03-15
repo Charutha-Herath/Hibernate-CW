@@ -2,14 +2,19 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="670.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.DashboardFormController">
+<AnchorPane fx:id="root" prefHeight="670.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.DashboardFormController">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="69.0" prefWidth="240.0" text="Dashboard ">
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="70.0" prefWidth="274.0" text="User Dashboard ">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>
@@ -45,5 +50,47 @@
             </ImageView>
          </graphic>
       </JFXButton>
+      <TabPane layoutX="18.0" layoutY="128.0" prefHeight="468.0" prefWidth="926.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Books                         ">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="462.0" prefWidth="926.0">
+                     <children>
+                        <TableView fx:id="tblBook" layoutX="2.0" layoutY="57.0" prefHeight="349.0" prefWidth="862.0">
+                           <columns>
+                              <TableColumn fx:id="colBookId" prefWidth="75.0" text="Book_ID" />
+                              <TableColumn fx:id="colBookTitle" prefWidth="128.22222900390625" text="Title" />
+                              <TableColumn fx:id="colBookAuthor" prefWidth="174.88885498046875" text="Author" />
+                              <TableColumn fx:id="colBookGenre" prefWidth="171.77789306640625" text="Genre" />
+                              <TableColumn fx:id="colBookAvailability" prefWidth="110.6666259765625" text="Availability" />
+                              <TableColumn fx:id="colBookBranch" prefWidth="105.55560302734375" text="Branch" />
+                              <TableColumn fx:id="colBookOptions" prefWidth="91.111083984375" text="Option" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="txtSearch" layoutX="8.0" layoutY="14.0" onAction="#searchOnAction" prefHeight="25.0" prefWidth="735.0" promptText="Search books..." style="-fx-background-radius: 10;" />
+                        <JFXButton layoutX="754.0" layoutY="14.0" onAction="#booksSearchOnAction" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #4ca3f4; -fx-background-radius: 15;" text="Search" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="History                             ">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="848.0">
+                     <children>
+                        <TableView fx:id="tblUserHistory" layoutX="15.0" layoutY="18.0" prefHeight="383.0" prefWidth="618.0">
+                           <columns>
+                              <TableColumn fx:id="colHistoryTid" prefWidth="97.55551147460938" text="TransactionId" />
+                              <TableColumn fx:id="colHistoryBookID" prefWidth="96.22219848632812" text="BookId" />
+                              <TableColumn fx:id="colHistoryBorrowedDate" prefWidth="142.4444580078125" text="BorrowedDate" />
+                              <TableColumn fx:id="colHistoryRetDate" prefWidth="153.5555419921875" text="ReturnDate" />
+                              <TableColumn fx:id="colHistoryStatus" prefWidth="125.111083984375" text="DueStatus" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

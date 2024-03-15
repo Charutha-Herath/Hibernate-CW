@@ -5,6 +5,7 @@ module com.example.hcwtest{
     requires jakarta.persistence;
     requires java.naming;
 
+
     requires org.hibernate.orm.core;
     requires com.jfoenix;
 

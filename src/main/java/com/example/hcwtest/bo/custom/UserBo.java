@@ -14,4 +14,5 @@ public interface UserBo extends SuperBo {
 
     String getUserId(String uname,String password);
 
+    boolean addTransaction(String bookId, String username);
 }

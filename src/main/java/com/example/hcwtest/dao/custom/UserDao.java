@@ -16,4 +16,6 @@ public interface UserDao extends SuperDao {
     String getNextId();
 
     String getUserId(String uname, String password);
+
+    User search(String username);
 }

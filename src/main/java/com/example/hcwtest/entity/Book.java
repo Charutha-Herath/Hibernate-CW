@@ -1,9 +1,9 @@
 package com.example.hcwtest.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table
 public class Book {
     @Id
     private String bookId;

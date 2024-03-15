@@ -142,10 +142,10 @@ public class UserDaoImpl implements UserDao {
 
         Session session = FactoryConfiguration.getInstance().getSession();
         try {
-            String hqlQuery = "SELECT u.userId FROM User u WHERE u.username = :uname AND u.password = :password";
+            String hqlQuery = "SELECT u.userId FROM User u WHERE u.username = ?1 AND u.password = ?2";
             Query<String> query = session.createQuery(hqlQuery);
-            query.setParameter("uname", uname);
-            query.setParameter("password", password);
+            query.setParameter(1, uname);
+            query.setParameter(2, password);
             query.setMaxResults(1);
             String userId = query.uniqueResult();
             System.out.println("UserId: " + userId);
@@ -166,6 +166,20 @@ public class UserDaoImpl implements UserDao {
         String newId = splitUserId(lastUId);
         transaction.commit();
         session.close();*/
+    }
+
+    @Override
+    public User search(String username) {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from User where username = ?1");
+        query.setParameter(1, username);
+        Object o = query.getSingleResult();
+        transaction.commit();
+        session.close();
+        return (User) o;
+
     }
 
     private static String splitUserId(String userId) {

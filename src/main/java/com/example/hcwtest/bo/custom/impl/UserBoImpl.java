@@ -2,15 +2,26 @@ package com.example.hcwtest.bo.custom.impl;
 
 import com.example.hcwtest.bo.custom.UserBo;
 import com.example.hcwtest.dao.DAOFactory;
+import com.example.hcwtest.dao.custom.BookDao;
+import com.example.hcwtest.dao.custom.TransactionDao;
 import com.example.hcwtest.dao.custom.UserDao;
 import com.example.hcwtest.dto.UserDto;
+import com.example.hcwtest.entity.Book;
+import com.example.hcwtest.entity.Transaction;
 import com.example.hcwtest.entity.User;
 
+
+import java.time.LocalDate;
 import java.util.HashMap;
 
 public class UserBoImpl implements UserBo {
 
     UserDao userDao = (UserDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.USER);
+
+    BookDao bookDao = (BookDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.BOOK);
+
+
+    TransactionDao transactionDao = (TransactionDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.TRANSACTION);
     @Override
     public boolean checkCredential(UserDto userDto){
         HashMap<String,String> allUsers = userDao.checker(new User(userDto.getUsername(),userDto.getPassword()));
@@ -46,5 +57,28 @@ public class UserBoImpl implements UserBo {
     @Override
     public String getUserId(String uname, String password) {
         return userDao.getUserId(uname,password);
+    }
+    @Override
+    public boolean addTransaction(String bookId, String username) {
+
+        String tId = transactionDao.getNextTId();
+
+        Book search = bookDao.search(bookId);
+
+        User searched = userDao.search(username);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate expirationDate = currentDate.plusDays(7);
+
+        Transaction newLog = new Transaction(tId, search, searched,
+                currentDate,
+                expirationDate,
+                false);
+        try {
+            transactionDao.save(newLog);
+            bookDao.updateStatusNo(search);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }
