@@ -13,7 +13,7 @@ public class Book {
     private String genre;
     private String status;
 
-    private String branch;
+    /*private String branch;*/
 
     public Book() {
 
@@ -33,7 +33,7 @@ public class Book {
         this.author = author;
         this.genre = genre;
         this.status = status;
-        this.branch = branch;
+        /*this.branch = branch;*/
     }
 
     public String getBookId() {
@@ -76,13 +76,13 @@ public class Book {
         this.status = status;
     }
 
-    public String getBranch() {
+    /*public String getBranch() {
         return branch;
     }
 
     public void setBranch(String branch) {
         this.branch = branch;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -92,7 +92,7 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", genre='" + genre + '\'' +
                 ", status='" + status + '\'' +
-                ", branch='" + branch + '\'' +
+                /*", branch='" + branch + '\'' +*/
                 '}';
     }
 }

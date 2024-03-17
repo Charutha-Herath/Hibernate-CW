@@ -8,6 +8,8 @@ public class TransactionTm {
     private String transactionId;
     private String book_name;
     private String username;
+
+    private String userId;
     private LocalDate borrowed_date;
     private LocalDate return_date;
     private boolean status;
@@ -26,6 +28,23 @@ public class TransactionTm {
         this.return_date = return_date;
         this.status = status;
         this.mod = mod;
+    }
+    public TransactionTm(String transactionId, String book_name, LocalDate borrowed_date, LocalDate return_date, boolean status) {
+        this.transactionId = transactionId;
+        this.book_name = book_name;
+        this.borrowed_date = borrowed_date;
+        this.return_date = return_date;
+        this.status = status;
+
+    }
+
+    public TransactionTm(String transactionId, String book_name, String userId, LocalDate borrowed_date, LocalDate return_date, boolean status) {
+        this.transactionId = transactionId;
+        this.book_name = book_name;
+        this.userId = userId;
+        this.borrowed_date = borrowed_date;
+        this.return_date = return_date;
+        this.status = status;
     }
 
     public String getTransactionId() {
@@ -50,6 +69,14 @@ public class TransactionTm {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public LocalDate getBorrowed_date() {
@@ -90,6 +117,7 @@ public class TransactionTm {
                 "transactionId='" + transactionId + '\'' +
                 ", book_name='" + book_name + '\'' +
                 ", username='" + username + '\'' +
+                ", userId='" + userId + '\'' +
                 ", borrowed_date=" + borrowed_date +
                 ", return_date=" + return_date +
                 ", status=" + status +

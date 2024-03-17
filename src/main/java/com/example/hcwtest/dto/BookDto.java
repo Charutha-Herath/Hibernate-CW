@@ -8,7 +8,7 @@ public class BookDto {
     private String genre;
     private String status;
 
-    private String branch;
+    /*private String branch;*/
 
     public BookDto() {
 
@@ -28,7 +28,7 @@ public class BookDto {
         this.author = author;
         this.genre = genre;
         this.status = status;
-        this.branch = branch;
+        /*this.branch = branch;*/
     }
 
     public String getBookId() {
@@ -71,13 +71,13 @@ public class BookDto {
         this.status = status;
     }
 
-    public String getBranch() {
+    /*public String getBranch() {
         return branch;
     }
 
     public void setBranch(String branch) {
         this.branch = branch;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -87,7 +87,7 @@ public class BookDto {
                 ", author='" + author + '\'' +
                 ", genre='" + genre + '\'' +
                 ", status='" + status + '\'' +
-                ", branch='" + branch + '\'' +
+                /*", branch='" + branch + '\'' +*/
                 '}';
     }
 }

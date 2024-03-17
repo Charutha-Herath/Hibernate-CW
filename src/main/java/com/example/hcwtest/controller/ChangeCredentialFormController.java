@@ -19,6 +19,7 @@ public class ChangeCredentialFormController {
     public TextField txtUsername;
     public TextField txtNewPassword;
     public TextField txtConfirmPassword;
+    public AnchorPane root;
 
     private String username;
 
@@ -77,6 +78,32 @@ public class ChangeCredentialFormController {
                     txtUsername.clear();
                     txtNewPassword.clear();
                     txtConfirmPassword.clear();
+
+
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
+
+
+
+                    new Alert(Alert.AlertType.WARNING,"Please logout and login again using new username and password").show();
+
+                    /*dash.btnLogoutOnAction(actionEvent);*/
+
+
+                    /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login_form.fxml"));
+                    AnchorPane anchorPane = loader.load();
+
+
+                    Scene scene = new Scene(anchorPane);
+
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.setTitle("Login");
+                    stage.centerOnScreen();
+
+                    stage.show();*/
+
+
                 }
             }else{
                 new Alert(Alert.AlertType.WARNING,"Password does not match").show();

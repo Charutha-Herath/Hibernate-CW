@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:id="MainPane" prefHeight="400.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.RegisterFormController">
+<AnchorPane fx:id="MainPane" prefHeight="400.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.RegisterFormController" stylesheets="@../CSS/Styles.css">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8f2fc" height="377.0" layoutX="9.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" width="342.0" />
       <Label layoutX="110.0" layoutY="37.0" prefHeight="40.0" prefWidth="153.0" text="Registration ">

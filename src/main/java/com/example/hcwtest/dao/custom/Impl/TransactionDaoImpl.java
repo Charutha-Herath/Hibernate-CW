@@ -2,9 +2,15 @@ package com.example.hcwtest.dao.custom.Impl;
 
 import com.example.hcwtest.config.FactoryConfiguration;
 import com.example.hcwtest.dao.custom.TransactionDao;
+import com.example.hcwtest.entity.User;
+import javafx.scene.control.Alert;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionDaoImpl implements TransactionDao {
     @Override
@@ -58,6 +64,58 @@ public class TransactionDaoImpl implements TransactionDao {
                 session.close();
             }
         }
+    }
+
+    @Override
+    public List<com.example.hcwtest.entity.Transaction> getAll(String text) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        List<com.example.hcwtest.entity.Transaction> logList;
+        try {
+            Query<com.example.hcwtest.entity.Transaction> query = session.createQuery("FROM Transaction where user.userId = ?1", com.example.hcwtest.entity.Transaction.class);
+            query.setParameter(1,text);
+            logList = query.list();
+        }
+        catch (Exception exception){
+            new Alert(Alert.AlertType.WARNING,"NO data in Logs").showAndWait();
+            logList = new ArrayList<>();
+        }
+
+        transaction.commit();
+        session.close();
+
+        return logList;
+
+    }
+
+    @Override
+    public List<com.example.hcwtest.entity.Transaction> getAllTrans() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        ArrayList<com.example.hcwtest.entity.Transaction> list = (ArrayList<com.example.hcwtest.entity.Transaction>)session.createQuery("FROM Transaction ").list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
+    @Override
+    public List<com.example.hcwtest.entity.Transaction> getOverDues() {
+
+        List<com.example.hcwtest.entity.Transaction> logList;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            String hql = "FROM Transaction WHERE return_date < CURRENT_DATE";
+            Query<com.example.hcwtest.entity.Transaction> query = session.createQuery(hql, com.example.hcwtest.entity.Transaction.class);
+            logList = query.list();
+
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            logList = new ArrayList<>();
+        }
+        return logList;
     }
 
 

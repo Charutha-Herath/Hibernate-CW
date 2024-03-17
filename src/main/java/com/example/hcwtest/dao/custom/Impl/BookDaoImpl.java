@@ -5,7 +5,9 @@ import com.example.hcwtest.dao.custom.BookDao;
 import com.example.hcwtest.dto.BookDto;
 import com.example.hcwtest.entity.Book;
 import com.example.hcwtest.entity.User;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import javafx.scene.control.Alert;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -57,6 +59,11 @@ public class BookDaoImpl implements BookDao {
         query.setMaxResults(1);
         String lastUId = (String) query.uniqueResult();
         System.out.println("lastBookId : "+lastUId);
+
+        if (lastUId==null){
+            return "B001";
+        }
+
 
         String newId = splitUserId(lastUId);
         transaction.commit();
@@ -153,6 +160,94 @@ public class BookDaoImpl implements BookDao {
             }
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Book> searchByName(String search) {
+        /*Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        Book singleResult = null;
+        try {
+            session = FactoryConfiguration.getInstance().getSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("from Book where title = ?1");
+            query.setParameter(1, search);
+            singleResult = (Book) query.uniqueResult();
+            transaction.commit();
+            System.out.println(singleResult);
+        } catch (NoResultException e) {
+
+            new Alert(Alert.AlertType.WARNING,"No result found").show();
+
+        } catch (HibernateException e) {
+            System.out.println("Error occurred during Hibernate operation: " + e.getMessage());
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+        return singleResult;*/
+
+        /*Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        Book singleResult;
+        try {
+            Query query = session.createQuery("from Book where title = ?1");
+            query.setParameter(1, search);
+            singleResult = (Book) query.getSingleResult();
+            transaction.commit();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            singleResult = new Book();
+        }
+
+        System.out.println(singleResult);
+        return singleResult;*/
+
+        List<com.example.hcwtest.entity.Book> singleResult;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            String hql = "FROM Book WHERE title = ?1";
+            Query<com.example.hcwtest.entity.Book> query = session.createQuery(hql, com.example.hcwtest.entity.Book.class);
+            query.setParameter(1, search);
+            singleResult = query.list();
+
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            singleResult = new ArrayList<>();
+        }
+        return singleResult;
+
+
+        /*List<com.example.hcwtest.entity.Transaction> logList;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            String hql = "FROM Transaction WHERE return_date < CURRENT_DATE";
+            Query<com.example.hcwtest.entity.Transaction> query = session.createQuery(hql, com.example.hcwtest.entity.Transaction.class);
+            logList = query.list();
+
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            logList = new ArrayList<>();
+        }
+        return logList;*/
+
+
+
     }
 
     private static String splitUserId(String userId) {

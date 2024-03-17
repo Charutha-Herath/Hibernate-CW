@@ -3,10 +3,16 @@ package com.example.hcwtest.controller;
 import com.example.hcwtest.bo.BOFactory;
 import com.example.hcwtest.bo.custom.BookBo;
 import com.example.hcwtest.bo.custom.BranchBo;
+import com.example.hcwtest.bo.custom.TransactionBo;
+import com.example.hcwtest.bo.custom.UserBo;
 import com.example.hcwtest.dto.BookDto;
 import com.example.hcwtest.dto.BranchDto;
 import com.example.hcwtest.dto.Tm.BookTm;
 import com.example.hcwtest.dto.Tm.BranchTm;
+import com.example.hcwtest.dto.Tm.TransactionTm;
+import com.example.hcwtest.dto.Tm.UserTm;
+import com.example.hcwtest.dto.TransactionDto;
+import com.example.hcwtest.dto.UserDto;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,6 +71,14 @@ public class AdminDashFormController {
     public TableColumn colTransactionBorrowDate;
     public TableColumn colTransactionReturnDate;
     public TableColumn colTransactionStatus;
+    public TableView tblUser;
+    public TableColumn colUserID;
+    public TableColumn colUserName;
+    public TableColumn colUserEmail;
+    public Label lblPleaseLogout;
+    public Label lblAdminId;
+    public TextField txtAdminName;
+    public TextField txtAdminEmail;
 
     private String id;
     private String username;
@@ -74,6 +88,10 @@ public class AdminDashFormController {
     BookBo bookBo = (BookBo) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.BOOK);
 
     BranchBo branchBo = (BranchBo) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.BRANCH);
+
+    UserBo userBo = (UserBo) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.USER);
+
+    TransactionBo transactionBo = (TransactionBo) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.TRANSACTION);
 
     public AdminDashFormController() {
 
@@ -113,7 +131,7 @@ public class AdminDashFormController {
 
     public void setPassword(String password) {
         this.password = password;
-        lblPasswordLoader.setText(this.password);
+        lblPasswordLoader.setText("********");
     }
 
     @Override
@@ -134,8 +152,19 @@ public class AdminDashFormController {
         tableListener();
         btnDisabler();
 
-        //--------------------------------------------------------------------------------------------------------------------
+        //------------------------------------------------------- Branch -------------------------------------------------------------
         branchInitialize();
+
+
+
+        //-------------------------------------------------------- User ---------------------------------------------------------
+
+        userInitializer();
+
+        //----------------------------------------------------  Transaction  ---------------------------------------------------
+
+        setCellValueFactoryTrans();
+        loadTrans();
     }
 
 
@@ -151,7 +180,7 @@ public class AdminDashFormController {
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
         colGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colBranch.setCellValueFactory(new PropertyValueFactory<>("branch"));
+        /*colBranch.setCellValueFactory(new PropertyValueFactory<>("branch"));*/
 
     }
 
@@ -168,8 +197,8 @@ public class AdminDashFormController {
                                 dto.getTitle(),
                                 dto.getAuthor(),
                                 dto.getGenre(),
-                                dto.getStatus(),
-                                dto.getBranch()
+                                dto.getStatus()
+                                /*dto.getBranch()*/
                         )
 
                 );
@@ -198,7 +227,9 @@ public class AdminDashFormController {
         stage.show();
     }
 
-    public void btnRefreshOnAction(ActionEvent actionEvent) {
+    public void btnRefreshCredentialOnAction(ActionEvent actionEvent) {
+
+
 
     }
 
@@ -224,13 +255,28 @@ public class AdminDashFormController {
         String author = txtAuthor.getText();
         String genre = txtGenre.getText();
         String comStatus = (String) comboStatus.getValue();
-        String comBranch = (String) comboBranches.getValue();
+        /*String comBranch = (String) comboBranches.getValue();*/
 
 
-        if(bookId.isEmpty() || title.isEmpty() || author.isEmpty() || genre.isEmpty() || comStatus==null || comBranch==null){
+        if(bookId.isEmpty() || title.isEmpty() || author.isEmpty() || genre.isEmpty() || comStatus==null /*|| comBranch==null*/){
             new Alert(Alert.AlertType.WARNING,"Please fill all fields").show();
         }else {
-            bookBo.addBook(new BookDto(bookId,title,author,genre,comStatus,comBranch));
+
+            if (!author.matches("^[a-zA-Z\\s.'-]{3,}$")) {
+                new Alert(Alert.AlertType.ERROR, "Invalid author").show();
+                return;
+            }
+
+            if (!title.matches("^[a-zA-Z0-9\\s.'-]{3,}$")) {
+                new Alert(Alert.AlertType.ERROR, "Invalid book title").show();
+                return;
+            }
+
+            if (!genre.matches("^[a-zA-Z\\s,.'-]{3,}$")) {
+                new Alert(Alert.AlertType.ERROR, "Invalid genre").show();
+                return;
+            }
+            bookBo.addBook(new BookDto(bookId,title,author,genre,comStatus));
 
             generateNextID();
 
@@ -238,6 +284,7 @@ public class AdminDashFormController {
             txtAuthor.clear();
             txtGenre.clear();
             comboLoader();
+            comboBranches.getItems().clear();
             comboBranchLoader();
 
             setCellValueFactory();
@@ -371,7 +418,7 @@ public class AdminDashFormController {
         idBtnRemove.setDisable(true);
     }
 
-    //---------------------------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------  Branch  -----------------------------------------------------------------------
 
 
     private void branchInitialize() {
@@ -381,6 +428,11 @@ public class AdminDashFormController {
 
         setCellValueFactoryBranches();
         loadAllBranches();
+
+        idBtnRemoveBranch.setDisable(true);
+        idBtnUpdateBranch.setDisable(true);
+
+        tableBranchListener();
     }
 
 
@@ -390,7 +442,39 @@ public class AdminDashFormController {
         String branchManager = txtBranchManager.getText();
         String branchBookTotal = txtBranchBookTotal.getText();
 
+        if (branchId.isEmpty()||branchManager.isEmpty()||branchName.isEmpty()||branchBookTotal.isEmpty()){
+
+        }else {
+            if (!branchName.matches("^[a-zA-Z0-9\\s,.'-]{3,}$")) {
+                new Alert(Alert.AlertType.ERROR, "Invalid location").show();
+                return;
+            }
+
+            /*if (!String.valueOf(bookNo).matches("^[0-9]+$")) {
+                new Alert(Alert.AlertType.ERROR, "Invalid number of books").show();
+                return;
+            }*/
+
+            if (!branchManager.matches("^[a-zA-Z\\s]{3,}$")) {
+                new Alert(Alert.AlertType.ERROR, "Invalid branch manager").show();
+                return;
+            }
         branchBo.saveBranch(new BranchDto(branchId,branchName,branchManager,branchBookTotal));
+
+        generateNextBranchID();
+
+        txtBranchName.clear();
+        txtBranchManager.clear();
+        txtBranchBookTotal.clear();
+
+        idBtnAddBranch.setDisable(false);
+        idBtnUpdateBranch.setDisable(true);
+        idBtnRemoveBranch.setDisable(true);
+
+        setCellValueFactoryBranches();
+        loadAllBranches();
+        }
+
     }
 
     public void refreshOnMouseBranchClicked(MouseEvent mouseEvent) {
@@ -398,11 +482,62 @@ public class AdminDashFormController {
     }
 
     public void btnBranchUpdateOnAction(ActionEvent actionEvent) {
+        String branchId = lblBranchId.getText();
+        String bName = txtBranchName.getText();
+        String manager = txtBranchManager.getText();
+        String bookTotal = txtBranchBookTotal.getText();
 
+
+        if(branchId.isEmpty() || bName.isEmpty() || manager.isEmpty() || bookTotal.isEmpty()){
+            new Alert(Alert.AlertType.WARNING,"Please fill all fields").show();
+        }else {
+
+            boolean flag = branchBo.branchUpdate(new BranchDto(branchId, bName, manager, bookTotal));
+
+            generateNextBranchID();
+
+            txtBranchName.clear();
+            txtBranchManager.clear();
+            txtBranchBookTotal.clear();
+
+
+            setCellValueFactoryBranches();
+            loadAllBranches();
+
+            idBtnAddBranch.setDisable(false);
+            idBtnUpdateBranch.setDisable(true);
+            idBtnRemoveBranch.setDisable(true);
+
+        }
     }
 
     public void btnBranchRemoveOnAction(ActionEvent actionEvent) {
+        String branchId = lblBranchId.getText();
 
+
+        if(branchId.isEmpty()){
+            new Alert(Alert.AlertType.WARNING,"Please fill all fields").show();
+        }else {
+            if (branchBo.deleteBranch(branchId)){
+
+                generateNextBranchID();
+
+                txtBranchName.clear();
+                txtBranchBookTotal.clear();
+                txtBranchManager.clear();
+
+
+                setCellValueFactoryBranches();
+                loadAllBranches();
+
+                idBtnAddBranch.setDisable(false);
+                idBtnUpdateBranch.setDisable(true);
+                idBtnRemoveBranch.setDisable(true);
+
+            }
+
+
+        }
     }
 
     public void generateNextBranchID(){
@@ -454,14 +589,179 @@ public class AdminDashFormController {
 
     }
 
+    public  void tableBranchListener() {
+        tblBranch.getSelectionModel().selectedItemProperty().addListener((observable, oldValued, newValue) -> {
+//            System.out.println(newValue);
+
+
+
+            if (newValue != null) {
+                idBtnAddBranch.setDisable(true);
+                idBtnRemoveBranch.setDisable(false);
+                idBtnUpdateBranch.setDisable(false);
+
+                setBranchData((BranchTm) newValue);
+            } else {
+                // Handle the case where newValue is null (optional)
+
+            }
+        });
+    }
+    private void setBranchData(BranchTm row) {
+
+        /*System.out.println(row.toString());
+
+        lblBookId.setText(row.getBookId());
+        txtTitle.setText(row.getTitle());
+        txtAuthor.setText(row.getAuthor());
+        txtGenre.setText(row.getGenre());*/
+
+        if (row != null) {
+            System.out.println(row.toString());
+
+            lblBranchId.setText(row.getBranchId());
+            txtBranchName.setText(row.getName());
+            txtBranchManager.setText(row.getManager());
+            txtBranchBookTotal.setText(row.getBook_total());
+            /*comboStatus.getItems().add(row.getStatus());*/
+        }
+
+    }
 
 
 
 
 
 
-    //---------------------------------------------------------------------------------------------------------------------------
 
+    //------------------------------------------------------------   User  ---------------------------------------------------------------
+
+
+    public void userInitializer(){
+        setCellValueFactoryUsers();
+        loadAllUsers();
+        generateNextAdminId();
+    }
+
+    private void setCellValueFactoryUsers(){
+        colUserID.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colUserName.setCellValueFactory(new PropertyValueFactory<>("username"));
+        colUserEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+
+    }
+
+
+    private void loadAllUsers(){
+        ObservableList<UserTm> obList = FXCollections.observableArrayList();
+
+        List<UserDto> dtoList = userBo.getAllUsers();
+
+        for (UserDto dto :dtoList) {
+            obList.add(
+                    new UserTm(
+                            dto.getUserId(),
+                            dto.getUsername(),
+                            dto.getEmail()
+                    )
+
+            );
+        }
+        tblUser.setItems(obList);
+    }
+
+    public void generateNextAdminId(){
+        String id =userBo.generateAdminId();
+        lblAdminId.setText(id);
+
+    }
+
+    public void btnSaveAdminOnAction(ActionEvent actionEvent) {
+        String username = txtAdminName.getText();
+        String email = txtAdminEmail.getText();
+        if (username.isEmpty() | email.isEmpty()) {
+
+            new Alert(Alert.AlertType.ERROR,"please fill all fields").show();
+        }else{
+
+            String id = lblAdminId.getText();
+            userBo.saveAdmin(new UserDto(id,username,email,"111111"));
+
+            txtAdminName.clear();
+            txtAdminEmail.clear();
+            userInitializer();
+            new Alert(Alert.AlertType.CONFIRMATION,"Save new admin successfully!").show();
+
+
+        }
+
+    }
+
+    //-------------------------------------------------- Transaction  ----------------------------------------------------
+
+    public void setCellValueFactoryTrans(){
+
+        colTransactionTrancID.setCellValueFactory(new PropertyValueFactory<>("TransactionId"));
+        colTransactionBookName.setCellValueFactory(new PropertyValueFactory<>("book_name"));
+        colTransactionUserName.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colTransactionBorrowDate.setCellValueFactory(new PropertyValueFactory<>("borrowed_date"));
+        colTransactionReturnDate.setCellValueFactory(new PropertyValueFactory<>("return_date"));
+        colTransactionStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        System.out.println("tblUserHistory1111111");
+    }
+    public void loadTrans(){
+       /* System.out.println("detail "+getUsername()+"    "+getPassword());
+        System.out.println("detail "+lblUsernameLoader.getText()+"    "+lblPasswordLoader.getText());
+        System.out.println("detail "+array[0]+"    "+array[1]);
+
+        String id = userBo.getUserId(array[0],array[1]);
+        System.out.println("userIdHistory  "+id);*/
+
+        ObservableList<TransactionTm> oblist = FXCollections.observableArrayList();
+        List<TransactionDto> list = transactionBo.getAllTransactions();
+        for (TransactionDto dto : list){
+
+            oblist.add(
+                    new TransactionTm(
+                            dto.getTransactionId(),
+                            dto.getBook_name(),
+                            dto.getUserId(),
+                            dto.getBorrowed_date(),
+                            dto.getReturn_date(),
+                            dto.isStatus()
+                    )
+            );
+            System.out.println("tblUserHistory22222");
+            tblTransaction.setItems(oblist);
+            tblTransaction.refresh();
+        }
+    }
+
+    public void btnBranchFilterOverdue(ActionEvent actionEvent) {
+
+    ObservableList<TransactionTm> oblist = FXCollections.observableArrayList();
+    List<TransactionDto> list = transactionBo.getOverDueUsers();
+        for (TransactionDto dto : list) {
+        oblist.add(
+                new TransactionTm(
+                        dto.getTransactionId(),
+                        dto.getBook_name(),
+                        dto.getUserId(),
+                        dto.getBorrowed_date(),
+                        dto.getReturn_date(),
+                        dto.isStatus()
+                )
+        );
+    }
+        tblTransaction.setItems(oblist);
+        tblTransaction.refresh();
+    }
+
+    public void btnTransRefreshOnMouseClicked(MouseEvent mouseEvent) {
+        setCellValueFactoryTrans();
+        loadTrans();
+    }
 
 
 }
+

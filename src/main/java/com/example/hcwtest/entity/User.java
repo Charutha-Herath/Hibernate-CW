@@ -23,10 +23,11 @@ public class User {
         this.password = password;
     }
 
-    public User(String username, String email, String password) {
+    public User(String userId,String username, String email) {
+        this.userId=userId;
         this.username = username;
         this.email = email;
-        this.password = password;
+
     }
 
     public User(String userId, String username, String email, String password) {

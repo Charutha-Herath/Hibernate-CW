@@ -5,14 +5,19 @@ import com.example.hcwtest.dao.DAOFactory;
 import com.example.hcwtest.dao.custom.BookDao;
 import com.example.hcwtest.dao.custom.TransactionDao;
 import com.example.hcwtest.dao.custom.UserDao;
+import com.example.hcwtest.dto.BranchDto;
+import com.example.hcwtest.dto.TransactionDto;
 import com.example.hcwtest.dto.UserDto;
 import com.example.hcwtest.entity.Book;
+import com.example.hcwtest.entity.Branch;
 import com.example.hcwtest.entity.Transaction;
 import com.example.hcwtest.entity.User;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class UserBoImpl implements UserBo {
 
@@ -56,6 +61,7 @@ public class UserBoImpl implements UserBo {
 
     @Override
     public String getUserId(String uname, String password) {
+
         return userDao.getUserId(uname,password);
     }
     @Override
@@ -67,7 +73,7 @@ public class UserBoImpl implements UserBo {
 
         User searched = userDao.search(username);
         LocalDate currentDate = LocalDate.now();
-        LocalDate expirationDate = currentDate.plusDays(7);
+        LocalDate expirationDate = currentDate.plusDays(14);
 
         Transaction newLog = new Transaction(tId, search, searched,
                 currentDate,
@@ -81,4 +87,54 @@ public class UserBoImpl implements UserBo {
         }
         return true;
     }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        ArrayList<User> users = userDao.getAll();
+
+        ArrayList<UserDto> dtoList = new ArrayList<>();
+
+        for (User user: users) {
+            dtoList.add(new UserDto(user.getUserId(),user.getUsername(),user.getEmail(),10));
+        }
+
+        return dtoList;
+    }
+
+    @Override
+    public List<TransactionDto> getAllTransactionsForThisUser(String text) {
+        List<Transaction> allFor = transactionDao.getAll(text);
+        List<TransactionDto> loglist = new ArrayList<>();
+        for(Transaction dto : allFor){
+            loglist.add(
+                    new TransactionDto(
+                            dto.getTransactionId(),
+                            dto.getBook().getBookId(),
+                            dto.getBorrowed_date(),
+                            dto.getReturn_date(),
+                            dto.isStatus()
+                    )
+            );
+        }
+        return loglist;
+
+    }
+
+    @Override
+    public String generateAdminId() {
+        String nextId = userDao.getNextAdminId();
+        return nextId;
+
+    }
+
+    @Override
+    public void saveAdmin(UserDto userDto) {
+        userDao.saveAdmin(new User(userDto.getUserId(),userDto.getUsername(),userDto.getEmail(),userDto.getPassword()));
+
+    }
+
+    /*@Override
+    public String getNewUsername(String id) {
+        return null;
+    }*/
 }

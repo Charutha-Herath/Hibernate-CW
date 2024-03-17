@@ -66,6 +66,29 @@ public class BranchDaoImpl implements BranchDao {
         return list;
     }
 
+    @Override
+    public boolean update(Branch entity) {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(entity);
+        transaction.commit();
+        session.close();
+
+        return true;
+    }
+
+    @Override
+    public boolean delete(String branchId) {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(session.load(Branch.class, branchId));
+        transaction.commit();
+        session.close();
+        return true;
+    }
+
     private static String splitId(String userId) {
         if (userId != null){
             String[] splint = userId.split("BR0");

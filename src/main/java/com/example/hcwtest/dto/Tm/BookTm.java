@@ -10,7 +10,7 @@ public class BookTm {
     private String genre;
     private String status;
 
-    private String branch;
+    /*private String branch;*/
 
     private JFXButton button;
 
@@ -32,16 +32,16 @@ public class BookTm {
         this.author = author;
         this.genre = genre;
         this.status = status;
-        this.branch = branch;
+        /*this.branch = branch;*/
     }
 
-    public BookTm(String bookId, String title, String author, String genre, String status, String branch, JFXButton button) {
+    public BookTm(String bookId, String title, String author, String genre, String status, JFXButton button) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.status = status;
-        this.branch = branch;
+       /* this.branch = branch;*/
         this.button = button;
     }
 
@@ -85,13 +85,13 @@ public class BookTm {
         this.status = status;
     }
 
-    public String getBranch() {
+   /* public String getBranch() {
         return branch;
     }
 
     public void setBranch(String branch) {
         this.branch = branch;
-    }
+    }*/
 
     public JFXButton getButton() {
         return button;
@@ -109,7 +109,7 @@ public class BookTm {
                 ", author='" + author + '\'' +
                 ", genre='" + genre + '\'' +
                 ", status='" + status + '\'' +
-                ", branch='" + branch + '\'' +
+                /*", branch='" + branch + '\'' +*/
                 ", button=" + button +
                 '}';
     }

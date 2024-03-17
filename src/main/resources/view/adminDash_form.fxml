@@ -14,14 +14,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="673.0" prefWidth="1071.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.AdminDashFormController">
+<AnchorPane fx:id="root" prefHeight="673.0" prefWidth="1071.0" stylesheets="@../CSS/Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.AdminDashFormController">
    <children>
-      <Label layoutX="40.0" layoutY="14.0" prefHeight="72.0" prefWidth="349.0" text="Admin Dashboard">
+      <Label layoutX="12.0" layoutY="14.0" prefHeight="72.0" prefWidth="357.0" style="-fx-border-color: BLACK; -fx-border-radius: 15;" text=" Admin Dashboard">
          <font>
             <Font name="System Bold" size="39.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="856.0" layoutY="7.0" prefHeight="111.0" prefWidth="206.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #f4c168;">
+      <AnchorPane layoutX="856.0" layoutY="7.0" prefHeight="111.0" prefWidth="206.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #bcdef6;">
          <children>
             <Label fx:id="lblPasswordLoader" layoutX="80.0" layoutY="50.0" prefHeight="18.0" prefWidth="70.0" />
             <Label layoutX="10.0" layoutY="50.0" text="Password :" textFill="#000000f7" />
@@ -31,16 +31,11 @@
                <font>
                   <Font size="11.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
-            <JFXButton layoutX="166.0" layoutY="4.0" onAction="#btnRefreshOnAction" text=" ">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/icon/refresh.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
+            <Label fx:id="lblPleaseLogout" layoutX="9.0" layoutY="69.0" prefHeight="39.0" prefWidth="124.0" textFill="#fa3c3c" />
          </children>
       </AnchorPane>
       <JFXButton layoutX="5.0" layoutY="626.0" onAction="#btnLogoutOnAction" prefHeight="39.0" prefWidth="38.0" text=" ">
@@ -73,35 +68,49 @@
                                  <font>
                                     <Font size="11.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </JFXButton>
                               <JFXButton fx:id="idBtnUpdate" buttonType="RAISED" layoutX="111.0" layoutY="316.0" onAction="#btnUpdateOnAction" prefHeight="28.0" prefWidth="56.0" style="-fx-background-radius: 15; -fx-background-color: #51ef54;" text="Update">
                                  <font>
                                     <Font size="11.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </JFXButton>
                               <JFXButton fx:id="idBtnRemove" buttonType="RAISED" layoutX="34.0" layoutY="316.0" onAction="#btnRemoveOnAction" prefHeight="28.0" prefWidth="63.0" style="-fx-background-radius: 15; -fx-background-color: #f25454;" text="Remove">
                                  <font>
                                     <Font size="11.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </JFXButton>
-                              <ComboBox fx:id="comboStatus" layoutX="118.0" layoutY="235.0" prefHeight="26.0" prefWidth="137.0" />
+                              <ComboBox fx:id="comboStatus" layoutX="118.0" layoutY="235.0" prefHeight="26.0" prefWidth="137.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></ComboBox>
                               <Label layoutX="209.0" layoutY="14.0" onMouseClicked="#refreshOnMouseClicked" text="Refresh" textFill="#399ef7">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Label>
                               <Label layoutX="14.0" layoutY="274.0" prefHeight="28.0" prefWidth="105.0" text="Branch                  : " />
-                              <ComboBox fx:id="comboBranches" layoutX="118.0" layoutY="275.0" prefHeight="26.0" prefWidth="137.0" />
+                              <ComboBox fx:id="comboBranches" layoutX="118.0" layoutY="275.0" prefHeight="26.0" prefWidth="137.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></ComboBox>
                            </children>
                         </AnchorPane>
-                        <TableView fx:id="tblBooks" layoutX="277.0" layoutY="9.0" prefHeight="464.0" prefWidth="775.0">
+                        <TableView fx:id="tblBooks" layoutX="277.0" layoutY="9.0" prefHeight="464.0" prefWidth="775.0" stylesheets="@../CSS/Styles.css">
                           <columns>
-                            <TableColumn fx:id="colBookId" prefWidth="88.79998779296875" text="Book ID" />
-                            <TableColumn fx:id="colTitle" prefWidth="139.99993896484375" text="Title" />
-                              <TableColumn fx:id="colAuthor" prefWidth="165.60003662109375" text="Author" />
-                              <TableColumn fx:id="colGenre" prefWidth="143.99993896484375" text="Genre" />
-                              <TableColumn fx:id="colStatus" prefWidth="116.0" text="Status" />
-                              <TableColumn fx:id="colBranch" prefWidth="116.0" text="Branch" />
+                            <TableColumn fx:id="colBookId" prefWidth="99.20001220703125" text="Book ID" />
+                            <TableColumn fx:id="colTitle" prefWidth="159.20001220703125" text="Title" />
+                              <TableColumn fx:id="colAuthor" prefWidth="177.5999755859375" text="Author" />
+                              <TableColumn fx:id="colGenre" prefWidth="169.60003662109375" text="Genre" />
+                              <TableColumn fx:id="colStatus" prefWidth="169.60009765625" text="Status" />
                           </columns>
                         </TableView>
                      </children>
@@ -112,12 +121,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="478.0" prefWidth="1066.0">
                      <children>
-                        <TableView fx:id="tblBranch" layoutX="305.0" layoutY="10.0" prefHeight="333.0" prefWidth="607.0">
+                        <TableView fx:id="tblBranch" layoutX="305.0" layoutY="10.0" prefHeight="334.0" prefWidth="674.0">
                           <columns>
                             <TableColumn fx:id="colBranchId" prefWidth="131.20001220703125" text="BranchId" />
-                            <TableColumn fx:id="colBranchName" prefWidth="153.60003662109375" text="Name" />
-                              <TableColumn fx:id="colBranchManager" prefWidth="188.7999267578125" text="Manager  " />
-                              <TableColumn fx:id="colBranchBookTotal" prefWidth="130.39990234375" text="Book total" />
+                            <TableColumn fx:id="colBranchName" prefWidth="189.60000610351562" text="Name" />
+                              <TableColumn fx:id="colBranchManager" prefWidth="193.5999755859375" text="Manager  " />
+                              <TableColumn fx:id="colBranchBookTotal" prefWidth="156.0" text="Book total" />
                           </columns>
                         </TableView>
                         <AnchorPane layoutX="4.0" layoutY="10.0" prefHeight="330.0" prefWidth="264.0" style="-fx-border-color: black;">
@@ -136,6 +145,9 @@
                            <font>
                               <Font size="11.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </JFXButton>
                         <Label layoutX="219.0" layoutY="24.0" onMouseClicked="#refreshOnMouseBranchClicked" text="Refresh" textFill="#399ef7">
                            <cursor>
@@ -146,11 +158,17 @@
                            <font>
                               <Font size="11.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </JFXButton>
                         <JFXButton fx:id="idBtnRemoveBranch" buttonType="RAISED" layoutX="44.0" layoutY="286.0" onAction="#btnBranchRemoveOnAction" prefHeight="28.0" prefWidth="63.0" style="-fx-background-radius: 15; -fx-background-color: #f25454;" text="Remove">
                            <font>
                               <Font size="11.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </JFXButton>
                      </children></AnchorPane>
             </content>
@@ -161,13 +179,35 @@
                      <children>
                         <AnchorPane layoutX="7.0" prefHeight="476.0" prefWidth="1050.0">
                            <children>
-                              <TableView fx:id="tblBooks1" layoutX="12.0" layoutY="12.0" prefHeight="410.0" prefWidth="598.0">
+                              <TableView fx:id="tblUser" layoutX="12.0" layoutY="12.0" prefHeight="410.0" prefWidth="745.0">
                                  <columns>
-                                    <TableColumn fx:id="colUserID" prefWidth="146.39996337890625" text="UserID" />
-                                    <TableColumn fx:id="colUserName" prefWidth="206.40003967285156" text="Username" />
-                                    <TableColumn fx:id="colUserEmail" prefWidth="244.00006103515625" text="Email" />
+                                    <TableColumn fx:id="colUserID" prefWidth="184.800048828125" text="UserID" />
+                                    <TableColumn fx:id="colUserName" prefWidth="255.99993896484375" text="Username" />
+                                    <TableColumn fx:id="colUserEmail" prefWidth="321.5999755859375" text="Email" />
                                  </columns>
                               </TableView>
+                              <AnchorPane layoutX="762.0" layoutY="16.0" prefHeight="310.0" prefWidth="288.0">
+                                 <children>
+                                    <AnchorPane layoutX="10.0" prefHeight="232.0" prefWidth="264.0" style="-fx-border-color: black;">
+                                       <children>
+                                          <Label layoutX="17.0" layoutY="34.0" prefHeight="18.0" prefWidth="90.0" text="New Admin  ID : " />
+                                          <Label fx:id="lblAdminId" layoutX="117.0" layoutY="35.0" prefHeight="18.0" prefWidth="86.0" />
+                                          <Label layoutX="17.0" layoutY="77.0" prefHeight="18.0" prefWidth="70.0" text="Username : " />
+                                          <TextField fx:id="txtAdminName" layoutX="90.0" layoutY="74.0" prefHeight="26.0" prefWidth="159.0" />
+                                          <Label layoutX="18.0" layoutY="127.0" prefHeight="18.0" prefWidth="70.0" text="Email         : " />
+                                          <TextField fx:id="txtAdminEmail" layoutX="90.0" layoutY="124.0" prefHeight="26.0" prefWidth="159.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <JFXButton buttonType="RAISED" layoutX="177.0" layoutY="177.0" onAction="#btnSaveAdminOnAction" prefHeight="28.0" prefWidth="81.0" style="-fx-background-radius: 15; -fx-background-color: #4ca3f4;" text="Save Admin">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </JFXButton>
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </AnchorPane>
                      </children>
@@ -176,22 +216,29 @@
             </Tab>
             <Tab text="Transaction               ">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="452.0" prefWidth="1058.0">
                      <children>
-                        <TableView fx:id="tblTransaction" layoutX="24.0" layoutY="60.0" prefHeight="406.0" prefWidth="817.0">
+                        <TableView fx:id="tblTransaction" layoutX="24.0" layoutY="60.0" prefHeight="390.0" prefWidth="907.0">
                            <columns>
-                              <TableColumn fx:id="colTransactionTrancID" prefWidth="114.44442749023438" text="TransactionID" />
-                              <TableColumn fx:id="colTransactionBookName" prefWidth="109.3333740234375" text="Book_Name" />
-                              <TableColumn fx:id="colTransactionUserName" prefWidth="114.44439697265625" text="User_Name" />
-                              <TableColumn fx:id="colTransactionBorrowDate" prefWidth="132.22222900390625" text="Borrowed_Date" />
-                              <TableColumn fx:id="colTransactionReturnDate" prefWidth="144.666748046875" text="Return_Date" />
-                              <TableColumn fx:id="colTransactionStatus" prefWidth="129.99993896484375" text="Status" />
-                              <TableColumn prefWidth="68.6666259765625" text="Options" />
+                              <TableColumn fx:id="colTransactionTrancID" prefWidth="124.0" text="TransactionID" />
+                              <TableColumn fx:id="colTransactionBookName" prefWidth="143.20001220703125" text="Book_Name" />
+                              <TableColumn fx:id="colTransactionUserName" prefWidth="138.4000244140625" text="User_Name" />
+                              <TableColumn fx:id="colTransactionBorrowDate" prefWidth="180.800048828125" text="Borrowed_Date" />
+                              <TableColumn fx:id="colTransactionReturnDate" prefWidth="175.99993896484375" text="Return_Date" />
+                              <TableColumn fx:id="colTransactionStatus" prefWidth="146.4000244140625" text="Status" />
                            </columns>
                         </TableView>
                         <AnchorPane layoutX="4.0" layoutY="5.0" prefHeight="467.0" prefWidth="1048.0">
                            <children>
-                              <Label layoutX="726.0" layoutY="16.0" onMouseClicked="#filterOverDueOnMouseClicked" prefHeight="18.0" prefWidth="111.0" text="Filter overdue users" textFill="#399ef7">
+                              <JFXButton buttonType="RAISED" layoutX="781.0" layoutY="20.0" onAction="#btnBranchFilterOverdue" prefHeight="28.0" prefWidth="144.0" style="-fx-background-radius: 15; -fx-background-color: #4ca3f4;" text="FIlter Overdue Users">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXButton>
+                              <Label layoutX="22.0" layoutY="31.0" onMouseClicked="#btnTransRefreshOnMouseClicked" prefHeight="18.0" prefWidth="56.0" text="Refresh..." textFill="#369dec">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>

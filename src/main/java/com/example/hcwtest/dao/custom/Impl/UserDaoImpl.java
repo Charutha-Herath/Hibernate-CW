@@ -2,11 +2,13 @@ package com.example.hcwtest.dao.custom.Impl;
 
 import com.example.hcwtest.config.FactoryConfiguration;
 import com.example.hcwtest.dao.custom.UserDao;
+import com.example.hcwtest.entity.Branch;
 import com.example.hcwtest.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -124,6 +126,12 @@ public class UserDaoImpl implements UserDao {
         String lastUId = (String) query.uniqueResult();
         System.out.println("lastId : "+lastUId);
 
+
+        if (lastUId==null){
+            return "U001";
+        }
+
+
         String newId = splitUserId(lastUId);
         transaction.commit();
         session.close();
@@ -142,13 +150,14 @@ public class UserDaoImpl implements UserDao {
 
         Session session = FactoryConfiguration.getInstance().getSession();
         try {
-            String hqlQuery = "SELECT u.userId FROM User u WHERE u.username = ?1 AND u.password = ?2";
+            String hqlQuery = "SELECT u.userId FROM User u WHERE u.username = ?1 ";
             Query<String> query = session.createQuery(hqlQuery);
             query.setParameter(1, uname);
-            query.setParameter(2, password);
+            /*query.setParameter(2, password);*/
             query.setMaxResults(1);
             String userId = query.uniqueResult();
             System.out.println("UserId: " + userId);
+
             return userId;
         } finally {
             session.close();
@@ -180,6 +189,61 @@ public class UserDaoImpl implements UserDao {
         session.close();
         return (User) o;
 
+    }
+
+    @Override
+    public ArrayList<User> getAll() {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        ArrayList<User> list = (ArrayList<User>)session.createQuery("FROM User ").list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
+    @Override
+    public String getNextAdminId() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hqlQuery = "SELECT u.userId FROM User u WHERE u.userId LIKE 'A%' ORDER BY u.userId DESC";
+        Query query = session.createQuery(hqlQuery);
+        query.setMaxResults(1);
+        String lastAId = (String) query.uniqueResult();
+        System.out.println("lastAdminId : "+lastAId);
+        if (lastAId==null){
+            return "A001";
+        }
+        String newId = splitAdminId(lastAId);
+        transaction.commit();
+        session.close();
+
+        return newId;
+
+    }
+
+    @Override
+    public void saveAdmin(User entity) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        session.persist(entity);
+        transaction.commit();
+        session.close();
+    }
+
+    private static String splitAdminId(String userId) {
+        if (userId != null){
+            String[] splint = userId.split("A0");
+
+            int id = Integer.parseInt(splint[1]);
+            id++;
+            if (id > 9){
+                return "A0"+id;
+            }
+            return "A00"+id;
+        }
+        return null;
     }
 
     private static String splitUserId(String userId) {

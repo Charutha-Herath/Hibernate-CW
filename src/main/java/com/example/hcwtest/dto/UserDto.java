@@ -27,6 +27,13 @@ public class UserDto {
         this.password = password;
     }
 
+    public UserDto(String userId, String username , String email,int x) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+
+    }
+
     public UserDto(String userId,String username, String email, String password) {
         this.userId= userId;
         this.username = username;

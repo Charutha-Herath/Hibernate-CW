@@ -1,22 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="MainPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 15;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.LoginFormController">
    <children>
-      <Label layoutX="261.0" layoutY="23.0" prefHeight="52.0" prefWidth="77.0" text="Login" textFill="#030303">
+      <Label layoutX="121.0" layoutY="23.0" prefHeight="52.0" prefWidth="77.0" text="Login" textFill="#5878d1">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtUsername" layoutX="173.0" layoutY="108.0" prefHeight="42.0" prefWidth="256.0" promptText="Username" style="-fx-background-radius: 15;" />
-      <JFXButton buttonType="RAISED" layoutX="275.0" layoutY="255.0" onAction="#btnSignIn" style="-fx-background-color: #5693ef; -fx-background-radius: 5;" text="Sign In" />
-      <JFXButton buttonType="RAISED" layoutX="262.0" layoutY="302.0" onAction="#btnRegister" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: #5693ef; -fx-background-radius: 5;" text="Register" />
-      <PasswordField fx:id="txtPassword" layoutX="173.0" layoutY="173.0" prefHeight="42.0" prefWidth="256.0" promptText="Password" style="-fx-background-radius: 15;" />
+      <TextField fx:id="txtUsername" layoutX="33.0" layoutY="108.0" prefHeight="42.0" prefWidth="256.0" promptText="Username" style="-fx-background-radius: 15;" />
+      <JFXButton buttonType="RAISED" layoutX="135.0" layoutY="255.0" onAction="#btnSignIn" style="-fx-background-color: #5693ef; -fx-background-radius: 5;" text="Sign In">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="122.0" layoutY="302.0" onAction="#btnRegister" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: #5693ef; -fx-background-radius: 5;" text="Register">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <Label fx:id="idHide" layoutX="244.0" layoutY="205.0" onMouseClicked="#hideOnMouseClick" prefHeight="18.0" prefWidth="30.0" text="Hide" textFill="#0a8bfc">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <Label fx:id="idShow" layoutX="244.0" layoutY="205.0" onMouseClicked="#showMouseOnClick" prefHeight="18.0" prefWidth="30.0" text="show" textFill="#0a8bfc">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <TextField fx:id="txtPassword" layoutX="33.0" layoutY="163.0" prefHeight="42.0" prefWidth="256.0" promptText="Password" style="-fx-background-radius: 15;" />
+      <PasswordField fx:id="passwordField" layoutX="33.0" layoutY="163.0" prefHeight="42.0" prefWidth="256.0" promptText="Password" style="-fx-background-radius: 15;" />
+      <ImageView fitHeight="394.0" fitWidth="280.0" layoutX="316.0" layoutY="3.0" opacity="0.79" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@../assets/icon/img/library2.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4ae85" height="18.0" layoutX="4.0" layoutY="5.0" opacity="0.72" stroke="BLACK" strokeType="INSIDE" width="307.0" />
+      <Label layoutX="8.0" layoutY="6.0" prefHeight="18.0" prefWidth="113.0" text="Your Libray" />
    </children>
 </AnchorPane>

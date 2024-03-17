@@ -7,6 +7,8 @@ public class TransactionDto {
     private String transactionId;
     private String book_name;
     private String username;
+
+    private String userId;
     private LocalDate borrowed_date;
     private LocalDate return_date;
     private boolean status;
@@ -14,14 +16,22 @@ public class TransactionDto {
     public TransactionDto() {
     }
 
-    public TransactionDto(String transactionId, String book_name, String username, LocalDate borrowed_date, LocalDate return_date, boolean status) {
+    public TransactionDto(String transactionId, String book_name, String userId, LocalDate borrowed_date, LocalDate return_date, boolean status) {
         this.transactionId = transactionId;
         this.book_name = book_name;
-        this.username = username;
+        this.userId = userId;
         this.borrowed_date = borrowed_date;
         this.return_date = return_date;
         this.status = status;
     }
+    public TransactionDto(String transactionId, String book_name, LocalDate borrowed_date, LocalDate return_date, boolean status) {
+        this.transactionId = transactionId;
+        this.book_name = book_name;
+        this.borrowed_date = borrowed_date;
+        this.return_date = return_date;
+        this.status = status;
+    }
+
 
     public String getTransactionId() {
         return transactionId;
@@ -37,6 +47,14 @@ public class TransactionDto {
 
     public void setBook_name(String book_name) {
         this.book_name = book_name;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -77,6 +95,7 @@ public class TransactionDto {
                 "transactionId='" + transactionId + '\'' +
                 ", book_name='" + book_name + '\'' +
                 ", username='" + username + '\'' +
+                ", userId='" + userId + '\'' +
                 ", borrowed_date=" + borrowed_date +
                 ", return_date=" + return_date +
                 ", status=" + status +

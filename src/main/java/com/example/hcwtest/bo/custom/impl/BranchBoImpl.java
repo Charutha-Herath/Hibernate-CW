@@ -45,4 +45,16 @@ public class BranchBoImpl implements BranchBo {
 
         return dtoList;
     }
+
+    @Override
+    public boolean branchUpdate(BranchDto dto) {
+
+        return branchDao.update(new Branch(dto.getBranchId(),dto.getName(),dto.getManager(),dto.getBook_total()));
+    }
+
+    @Override
+    public boolean deleteBranch(String branchId) {
+
+        return branchDao.delete(branchId);
+    }
 }

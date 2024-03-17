@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -12,14 +13,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="670.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.DashboardFormController">
+<AnchorPane fx:id="root" prefHeight="670.0" prefWidth="974.0" stylesheets="@../CSS/Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hcwtest.controller.DashboardFormController">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="70.0" prefWidth="274.0" text="User Dashboard ">
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="70.0" prefWidth="290.0" style="-fx-border-color: black; -fx-border-radius: 20;" text=" User Dashboard ">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="687.0" layoutY="7.0" prefHeight="111.0" prefWidth="206.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #f4c168;">
+      <AnchorPane layoutX="737.0" layoutY="7.0" prefHeight="111.0" prefWidth="206.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #bcdef6;">
          <children>
             <Label fx:id="lblPasswordLoader" layoutX="80.0" layoutY="50.0" prefHeight="18.0" prefWidth="70.0" />
             <Label layoutX="10.0" layoutY="50.0" text="Password :" textFill="#000000f7" />
@@ -29,15 +30,6 @@
                <font>
                   <Font size="11.0" />
                </font>
-            </JFXButton>
-            <JFXButton layoutX="165.0" layoutY="5.0" onAction="#btnRefreshOnAction" text=" ">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/icon/refresh.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
             </JFXButton>
          </children>
       </AnchorPane>
@@ -50,40 +42,43 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <TabPane layoutX="18.0" layoutY="128.0" prefHeight="468.0" prefWidth="926.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="18.0" layoutY="128.0" prefHeight="468.0" prefWidth="926.0" stylesheets="@../CSS/Styles.css" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Books                         ">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="462.0" prefWidth="926.0">
                      <children>
-                        <TableView fx:id="tblBook" layoutX="2.0" layoutY="57.0" prefHeight="349.0" prefWidth="862.0">
+                        <TableView fx:id="tblBook" layoutX="2.0" layoutY="67.0" prefHeight="349.0" prefWidth="862.0">
                            <columns>
                               <TableColumn fx:id="colBookId" prefWidth="75.0" text="Book_ID" />
                               <TableColumn fx:id="colBookTitle" prefWidth="128.22222900390625" text="Title" />
                               <TableColumn fx:id="colBookAuthor" prefWidth="174.88885498046875" text="Author" />
                               <TableColumn fx:id="colBookGenre" prefWidth="171.77789306640625" text="Genre" />
-                              <TableColumn fx:id="colBookAvailability" prefWidth="110.6666259765625" text="Availability" />
-                              <TableColumn fx:id="colBookBranch" prefWidth="105.55560302734375" text="Branch" />
-                              <TableColumn fx:id="colBookOptions" prefWidth="91.111083984375" text="Option" />
+                              <TableColumn fx:id="colBookAvailability" prefWidth="167.20001220703125" text="Availability" />
+                              <TableColumn fx:id="colBookOptions" prefWidth="139.199951171875" text="Option" />
                            </columns>
                         </TableView>
                         <TextField fx:id="txtSearch" layoutX="8.0" layoutY="14.0" onAction="#searchOnAction" prefHeight="25.0" prefWidth="735.0" promptText="Search books..." style="-fx-background-radius: 10;" />
-                        <JFXButton layoutX="754.0" layoutY="14.0" onAction="#booksSearchOnAction" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #4ca3f4; -fx-background-radius: 15;" text="Search" />
+                        <JFXButton buttonType="RAISED" layoutX="754.0" layoutY="14.0" onAction="#booksSearchOnAction" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #4ca3f4; -fx-background-radius: 15;" text="Search" />
+                        <Label layoutX="11.0" layoutY="42.0" onMouseClicked="#bookTableRefresh" prefHeight="18.0" prefWidth="124.0" text="Refresh table..." textFill="#39a5f2">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
                      </children>
-                  </AnchorPane>
+                  </AnchorPane>  
                </content>
             </Tab>
             <Tab text="History                             ">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="848.0">
                      <children>
-                        <TableView fx:id="tblUserHistory" layoutX="15.0" layoutY="18.0" prefHeight="383.0" prefWidth="618.0">
+                        <TableView fx:id="tblUserHistory" layoutX="15.0" layoutY="18.0" prefHeight="383.0" prefWidth="815.0">
                            <columns>
-                              <TableColumn fx:id="colHistoryTid" prefWidth="97.55551147460938" text="TransactionId" />
-                              <TableColumn fx:id="colHistoryBookID" prefWidth="96.22219848632812" text="BookId" />
-                              <TableColumn fx:id="colHistoryBorrowedDate" prefWidth="142.4444580078125" text="BorrowedDate" />
-                              <TableColumn fx:id="colHistoryRetDate" prefWidth="153.5555419921875" text="ReturnDate" />
-                              <TableColumn fx:id="colHistoryStatus" prefWidth="125.111083984375" text="DueStatus" />
+                              <TableColumn fx:id="colHistoryTid" prefWidth="147.99999618530273" text="TransactionId" />
+                              <TableColumn fx:id="colHistoryBookID" prefWidth="179.99998474121094" text="BookId" />
+                              <TableColumn fx:id="colHistoryBorrowedDate" prefWidth="187.20001220703125" text="BorrowedDate" />
+                              <TableColumn fx:id="colHistoryRetDate" prefWidth="168.7999267578125" text="ReturnDate" />
+                              <TableColumn fx:id="colHistoryStatus" prefWidth="132.00006103515625" text="DueStatus" />
                            </columns>
                         </TableView>
                      </children>
@@ -92,5 +87,6 @@
             </Tab>
          </tabs>
       </TabPane>
+      <Label fx:id="lblPleaseLogout" layoutX="696.0" layoutY="72.0" prefHeight="39.0" prefWidth="124.0" textFill="#e73434" />
    </children>
 </AnchorPane>

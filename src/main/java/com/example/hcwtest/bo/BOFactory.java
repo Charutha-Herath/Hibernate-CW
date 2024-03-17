@@ -2,6 +2,7 @@ package com.example.hcwtest.bo;
 
 import com.example.hcwtest.bo.custom.impl.BookBoImpl;
 import com.example.hcwtest.bo.custom.impl.BranchBoImpl;
+import com.example.hcwtest.bo.custom.impl.TransactionBoImpl;
 import com.example.hcwtest.bo.custom.impl.UserBoImpl;
 
 
@@ -14,7 +15,7 @@ public class BOFactory {
         return (boFactory==null)?boFactory=new BOFactory():boFactory;
     }
     public enum BOTypes{
-        USER,BOOK,BRANCH
+        USER,BOOK,BRANCH,TRANSACTION
     }
     public SuperBo getBO(BOTypes boTypes){
         switch (boTypes){
@@ -24,6 +25,8 @@ public class BOFactory {
                 return new BookBoImpl();
             case BRANCH:
                 return new BranchBoImpl();
+            case TRANSACTION:
+                return new TransactionBoImpl();
             default:
                 return null;
         }

@@ -3,6 +3,7 @@ package com.example.hcwtest.dao.custom;
 import com.example.hcwtest.dao.SuperDao;
 import com.example.hcwtest.entity.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface UserDao extends SuperDao {
@@ -18,4 +19,10 @@ public interface UserDao extends SuperDao {
     String getUserId(String uname, String password);
 
     User search(String username);
+
+    ArrayList<User> getAll();
+
+    String getNextAdminId();
+
+    void saveAdmin(User user);
 }

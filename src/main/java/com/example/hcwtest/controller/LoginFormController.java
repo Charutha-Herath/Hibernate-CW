@@ -3,12 +3,16 @@ package com.example.hcwtest.controller;
 import com.example.hcwtest.bo.BOFactory;
 import com.example.hcwtest.bo.custom.UserBo;
 import com.example.hcwtest.dto.UserDto;
+import com.example.hcwtest.util.RegexUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -20,6 +24,9 @@ public class LoginFormController {
     public AnchorPane MainPane;
     public TextField txtUsername;
     public TextField txtPassword;
+    public Label idHide;
+    public Label idShow;
+    public PasswordField passwordField;
 
     private Stage stage;
 
@@ -29,12 +36,18 @@ public class LoginFormController {
 
     UserBo userBo = (UserBo) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.USER);
 
+
+    public void initialize(){
+        idHide.setVisible(false);
+    }
+
     public void btnSignIn(ActionEvent actionEvent) throws IOException {
 
-        loadAdminDash();
+        //loadAdminDash();
+        //loadUserDash();
 
         String uname = txtUsername.getText();
-        String pwd = txtPassword.getText();
+        String pwd = passwordField.getText();
 
         System.out.println(uname);
         System.out.println(pwd);
@@ -43,8 +56,20 @@ public class LoginFormController {
             new Alert(Alert.AlertType.ERROR,"please fill all fields").show();
         }else {
 
+            if (!RegexUtil.matchesRegex(uname, "^[a-zA-Z0-9_]{4,}$")) {
+            new Alert(Alert.AlertType.ERROR, "Invalid username").show();
+            return;
+            }
+
+            if (!RegexUtil.matchesRegex(pwd, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+                new Alert(Alert.AlertType.ERROR, "Invalid password").show();
+                return;
+            }
+
+
 
             if (userBo.checkCredential(new UserDto(uname,pwd)) ){
+
                 /*MainPane.getChildren().clear();
                 MainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml")));*/
 
@@ -67,9 +92,9 @@ public class LoginFormController {
 
                 String id = userBo.getUserId(uname,pwd);
 
-                /*if (id.startsWith("U")){
-
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard_form.fxml"));
+                if (id.startsWith("U")){
+                    loadUserDash();
+                    /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard_form.fxml"));
                     AnchorPane anchorPane = loader.load();
                     DashboardFormController dashboardFormController = loader.getController();
                     dashboardFormController.setUsername(uname);
@@ -82,11 +107,13 @@ public class LoginFormController {
                     stage.setTitle("UserDash");
                     stage.centerOnScreen();
 
-                    stage.show();
+                    stage.show();*/
 
 
                 }else{
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminDash_form.fxml"));
+                    loadAdminDash();
+
+                    /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminDash_form.fxml"));
                     AnchorPane anchorPane = loader.load();
                     AdminDashFormController adminDashFormController = loader.getController();
                     adminDashFormController.setUsername(uname);
@@ -100,8 +127,8 @@ public class LoginFormController {
                     stage.setTitle("AdminDash");
                     stage.centerOnScreen();
 
-                    stage.show();
-                }*/
+                    stage.show();*/
+                }
 
 
             }else{
@@ -151,5 +178,48 @@ public class LoginFormController {
 
         stage.show();
 
+    }
+
+    public void loadUserDash() throws IOException {
+
+        String uname = txtUsername.getText();
+        String pwd = txtPassword.getText();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard_form.fxml"));
+        AnchorPane anchorPane = loader.load();
+        DashboardFormController dashboardFormController = loader.getController();
+        dashboardFormController.setUsername(uname);
+        dashboardFormController.setPassword(pwd);
+        dashboardFormController.setUsernamePassword(uname,pwd);
+        /*dashboardFormController.initializeHistory();*/
+        String id = userBo.getUserId(uname,pwd);
+        dashboardFormController.loadHistory(id);
+
+        Scene scene = new Scene(anchorPane);
+
+        Stage stage = (Stage) MainPane.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("UserDash");
+        stage.centerOnScreen();
+
+        stage.show();
+    }
+
+    public void hideOnMouseClick(MouseEvent mouseEvent) {
+        String password = txtPassword.getText();
+        txtPassword.setText(password);
+        idHide.setVisible(false);
+        idShow.setVisible(true);
+        passwordField.setVisible(true);
+        txtPassword.setVisible(false);
+    }
+
+    public void showMouseOnClick(MouseEvent mouseEvent) {
+        String password = passwordField.getText();
+        txtPassword.setText(password);
+        idShow.setVisible(false);
+        idHide.setVisible(true);
+        passwordField.setVisible(false);
+        txtPassword.setVisible(true);
     }
 }

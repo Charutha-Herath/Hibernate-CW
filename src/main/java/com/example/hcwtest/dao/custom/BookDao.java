@@ -22,4 +22,6 @@ public interface BookDao extends SuperDao {
     Book search(String bookId);
 
     void updateStatusNo(Book search);
+
+    List<Book> searchByName(String search);
 }

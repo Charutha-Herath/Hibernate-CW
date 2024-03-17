@@ -16,4 +16,8 @@ public interface BranchBo extends SuperBo {
     List<String> getBranchName();
 
     List<BranchDto> getAllBranches();
+
+    boolean branchUpdate(BranchDto branchDto);
+
+    boolean deleteBranch(String branchId);
 }
